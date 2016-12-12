@@ -1,0 +1,1 @@
+Need Blnk_SDK.H from Meadowlark Optics; and NIDAQmx.h from National Instrument
