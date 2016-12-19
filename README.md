@@ -1,4 +1,3 @@
-# ClosedLoop
 #Introduction
 This is a software package for the application of online closed-loop all-optical interrogation of neural circuits. The code was written by Zihui Zhang, Lloyd Russel, Oliver Gauld and Adam Packer in the lab of Michael Hausser.
 The closed-loop interface (RTAOI) analyses the raw data acquired by a two-photon microscope (Bruker Corporation) on-the-fly and communicates with the microscope control software, Prairie View (Bruker Corporation), a custom spatial light modulator (SLM) control software (CL-Blink, based on the Blink SDK provided by Meadowlark Optics) and a custom sensory stimulation control software (StimPlayground_TCP) via TCP/IP sockets. The interface enable users to select regions of interests (ROIs), specify experiment protocols, and save recordings. 
@@ -17,3 +16,4 @@ Detailed instructions can be found in the source codes.
 #Dependences
 Spiral size, revolution and durations of the photostimulation protocol should be defined in PrarieView (Bruker Corporation). The access to the raw image data stream depends on PrairieLink (Bruker Corporation). The phase masks are uploaded to the SLM using the Blink_SDK dll(Meadowlark Optics). Analogue voltage outputs were generated using NI-DAQmx (National Instruments). Software platforms used in the package include: VB.net, Visual Studio 2013 (64 bits) and Matlab (2016a). This code can be done with Scanimage
 http://scanimage.vidriotechnologies.com/pages/viewpage.action?pageId=18252396
+
