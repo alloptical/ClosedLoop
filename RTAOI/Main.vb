@@ -1,8 +1,15 @@
-﻿Option Strict Off
+﻿' Closed-loop interface    20161219
+' make sure only one image acquisition channel is on in prairie view, and image conversion to tiff is disabled
+' image size 512x512
+' setup SLM control and sensory stimulation control
+' start RTAOI.exe 
+' select a .bmp image and select centres of ROIs 
+' setup experiment type, parameters and TCP connections in the UI
+' check 'display-off' box and click start-experiment
+' experiment will start as Prairie View starts imaging
+' save the stimulation frame and pattern indices to a .txt file 
 
-'ONLY DISPLAY X FRAMES - might speed up?
-'To DO: tri-tar 2000 frames for control and false-alarm detection; 4000 frames for experiment
-
+Option Strict Off
 Imports System.Runtime.InteropServices
 Imports System.Math
 Imports System.Threading
@@ -10,20 +17,15 @@ Imports System.Linq
 Imports System.Net 'TCP
 
 Public Class Main
-   
-
-
+    ' change the parameters here 
     Dim TCPClients As Sockets.TcpClient
     Dim TCPClientStream As Sockets.NetworkStream
-
     Dim fmt As String = "00"
-    Private AllResetFrames As Integer = 2
+    Private AllResetFrames As Integer = 2 ' ignore photostim-contaminated frames
     'ROIs
-    Private NumTriggerROIs As Integer = 3  ' number of trigger rois in experiment  20160410 set NumTriggerROIs = 3; not responding after ~ 50 frames at zoom2
-    '20160417 worked well for NumTrigggerROIs <= 2, ROIradius = 5
+    Private NumTriggerROIs As Integer = 3  ' number of trigger rois in experiment 
     Private SelectedROIsCount As Integer = 0  'used for start, count numebr of rois as they are seleted
     Private MaskRadius As Integer = 10
-    'size in pixels of the radius of thecircle centred around trigger ROI centroid from which activity traces are extracted. was 9
     Private ROIMasks As New List(Of Image)
     Private ROIMaskIndices(NumTriggerROIs) As Queue(Of Integer)
     Private AllMaskROIArray(512 * 512 - 1) As Integer
@@ -38,8 +40,6 @@ Public Class Main
     Private RefMagnification As Single = 1.14      'zoom used for generating SLM phase mask
 
     'startup bits
-    'Private StartUpWaitOver As Boolean
-    'Private StartUpWaitTime As Long = 50000 'in samples (frames), time to wait before enabling triggers - to acquire baseline
     Private SamplesReceived As Long
     Private ExperimentRunning As Boolean
     Private AllROIsSelected As Boolean
@@ -49,18 +49,12 @@ Public Class Main
     Private FireThisWhenAboveLabel(NumTriggerROIs - 1) As Label
     Private FireThisWhenBelowCheck(NumTriggerROIs - 1) As CheckBox
     Private FireThisWhenBelowLabel(NumTriggerROIs - 1) As Label
-
-    'Private FireThisROIWhenAbove(NumTriggerROIs - 1) As Boolean
-    'Private FireThisROIWhenBelow(NumTriggerROIs - 1) As Boolean
-
-
     Private StartRecording As Boolean = False
 
     'data
     Private SlidingWindowSize As Integer = 60 'in samples (frames), this is the size of the buffer holding the data (ROI traces)
     Private TempArrayForPlot(SlidingWindowSize - 1) As Double
     Private RoundTempArray(SlidingWindowSize - 1) As Double
-    'Private Prev30Values(30 - 1) As Double ' not used
     Private SlidingWindowArray(NumTriggerROIs - 1, SlidingWindowSize - 1) As Single
     Private ROIThreshold(NumTriggerROIs - 1) As Single
     Private threshLabel(NumTriggerROIs - 1) As Label
@@ -72,7 +66,6 @@ Public Class Main
     Private CurrentValue As Single
     Private CurrentRatio As Single
     Private LastRatio(NumTriggerROIs - 1) As Single
-    'Private PreviousValue As Single
 
     Private av As Single
     Private sd As Single
@@ -87,7 +80,7 @@ Public Class Main
     '================ for multi-cell rate clamp===========
 
     Private NumWaitContinuousFrames As Integer = 2
-    Private AllTriggerStatus As Integer = 0  ' SLM pattern No.
+    Private AllTriggerStatus As Integer = 0  ' SLM Phase-mask index.
     Private TriggerTable(NumTriggerROIs - 1) As Integer
     Private DisplayOn As Boolean = True
 
@@ -102,7 +95,6 @@ Public Class Main
     'Private daqtask As New Task
     Private daqtaskS1 As New Task  ' Dev6 ao0
     Private daqtaskS2 As New Task   ' Dev6 ao1 toPV
-    'Private writer As New AnalogMultiChannelWriter(daqtask.Stream)
     Private writerS1 As New AnalogSingleChannelWriter(daqtaskS1.Stream)
     Private writerS2 As New AnalogSingleChannelWriter(daqtaskS2.Stream)
     Private OutputArrayLength As Integer = 15 * NumTriggerROIs - 1
@@ -111,12 +103,9 @@ Public Class Main
     Private ToPVtrigger(10) As Double
     Private ClampOnArray(5) As Double
     Private ClampOffArray(5) As Double
-    'Private ToSLMOutputArray(1, 3) As Double ' for test only
-    'Private AnalogOutputArray(1, 10) As Double 'analog signal
-    'Private AnalogLUT(NumTriggerROIs) As Double
     Private TestOutputArray(1, 10) As Double
-    Private TriggersToSLM(NumTriggerROIs, OutputArrayLength) As Double  'should be size of NumTriggerROIs, 8 works for now
-    Private TriggerToPV(NumTriggerROIs, OutputArrayLength) As Double  'should be size of NumTriggerROIs, 8 works for now
+    Private TriggersToSLM(NumTriggerROIs, OutputArrayLength) As Double  
+    Private TriggerToPV(NumTriggerROIs, OutputArrayLength) As Double  
     Private TriggerEnabled(NumTriggerROIs - 1) As Boolean
     Private AllTriggersEnabled As Boolean
     Private LastTrigger As Long
@@ -126,7 +115,7 @@ Public Class Main
     Private StimNum As Integer
     Private NumFrames As Integer = 0
     Private LastStimFrame(NumTriggerROIs - 1) As Integer
-    Private CurrentSLMPattern As Integer = 0 'keep track of SLM pattern to know how many time to trigger to get to desired position in list
+    Private CurrentSLMPattern As Integer = 0 'keep track of SLM pattern 
     Private BlankXSamplesPostStim As Integer = 0
     Private filepath As String = "F:\Zoe"      'default save file path
 
@@ -207,24 +196,13 @@ Public Class Main
     Private NumNoiseStdFrames(NumTriggerROIs - 1) As Integer
     Private NumControlFrames As Integer = 3000
 
-
-    ' false alarm detection -- using noise floor 
-    'Private Noise_floor(NumTriggerROIs - 1) As Single
-    'Private Num_Sus(NumTriggerROIs - 1) As Integer
-    'Private Num_FA As Integer
-    'Private Dff_StimFrames(NumTriggerROIs - 1) As Integer
-
     Private LastTriThresh(NumTriggerROIs - 1) As Integer
     Private NumPostStim(NumTriggerROIs - 1) As Integer
 
-    ' low-pass filter 
+    ' wait for another frame before triggering photostim
     Private TriggerOnFlag(NumTriggerROIs - 1) As Integer
     Private TriggerOnFrame(NumTriggerROIs - 1) As Integer
     Private EnableLPF As Boolean = False
-
-
-
-
 
     '' parameters for test  
     'Private ExperimentRunning As Boolean = True
@@ -236,7 +214,7 @@ Public Class Main
 
 
     Private Sub OpenImage()
-        'open an image to use for selection of ROIs
+        'open an image to select ROIs
         OpenFileDialog1.Filter = "BMP |*.bmp| All Files|*.*"
         OpenFileDialog1.FileName = ""
         If OpenFileDialog1.ShowDialog(Me) = DialogResult.OK Then
@@ -245,16 +223,12 @@ Public Class Main
         End If
     End Sub
 
-    Private Sub zoomChange(ByVal Magnification As Single)     ' cannot use zoom when display is off
+    Private Sub zoomChange(ByVal Magnification As Single)     ' works for 'display-on' mode
 
         ' reset image
         PictureBox2.Image = Nothing
         Dim bmp0 As New Drawing.Bitmap(512, 512)
         PictureBox2.Image = bmp0
-        'PictureBox2.Parent = PictureBox1
-        'PictureBox2.Location = New Point(0, 0)
-
-
 
         For ROIIx As Integer = 0 To NumTriggerROIs - 1
 
@@ -268,7 +242,6 @@ Public Class Main
                 PictureBox2.Invalidate()
                 Exit Sub
             End If
-
 
 
             Using g As Graphics = Graphics.FromImage(PictureBox2.Image)
@@ -433,7 +406,7 @@ Public Class Main
             If i < 4 Then
                 Chart1.ChartAreas(i).AxisX.Maximum = SlidingWindowSize
 
-                'Add some components to gui
+                'Add some components to gui, up to 8 ROIs
                 threshLabel(i) = New Label
                 threshLabel(i).Text = "Threshold"
                 threshLabel(i).Size = New Size(100, 13)
@@ -553,30 +526,11 @@ Public Class Main
         Next
 
         '================ End build array 20160330  ======================
-        ' trigger array lookup table
-
-        '==================== build trial status =================================
-
-        'For j As Integer = 1 To 4                                       'build array for 5 min recording 9000 frames
-        '    For i As Integer = 900 * 2 * j To 900 * (2 * j + 1) - 1
-        '        TrialStatus(i) = True
-        '    Next
-        'Next
-        ' for clamping
-        'For j As Integer = 1 To 7 Step 2                                      'build array for 4.5 min recording 8200 frames
-        '    For i As Integer = 900 * j To 900 * (j + 1) - 1
-        '        TrialStatus(i) = True
-        '    Next
-        'Next
-
+     
         ''-- for trigger-target
         For i As Integer = NumControlFrames To TotalNumFrames - 1
             TrialStatus(i) = True
         Next
-
-        'For i As Integer = 0 To NumTriggerROIs - 1
-        '    Dff_StimFrames(i) = 500
-        'Next
 
         ' for multi-clamping
         For i As Integer = 0 To NumTriggerROIs - 1
@@ -591,9 +545,9 @@ Public Class Main
         daqtaskS1.Timing.SampleClockRate = 10000
         daqtaskS2.Timing.SampleClockRate = 10000
         daqtask2.AIChannels.CreateVoltageChannel("Dev6/ai1", "readChannel", AITerminalConfiguration.Differential, 0.0, 5.0, AIVoltageUnits.Volts)
-        'daqtaskD.DOChannels.CreateChannel("Dev6/do0", "DigChannel", ChannelLineGrouping.OneChannelForEachLine)
         'daqtask.Timing.SampleClockRate = 10000
-        'start thread
+        
+		'start thread
         chkFlipOdd.Checked = True
         m_oUpdateThread.Priority = ThreadPriority.AboveNormal
         m_oUpdateThread.Start()
@@ -612,7 +566,7 @@ Public Class Main
             Dim iSamples As Integer
             iPollStart = m_oTimer.ElapsedMilliseconds
 
-            Dim iBuffer() As Int16 = m_pl.ReadRawDataStream(iSamples)     'when isamples > 3*512*512  error at marshal.copy!! 20160515
+            Dim iBuffer() As Int16 = m_pl.ReadRawDataStream(iSamples)     'when isamples > 3*512*512  error at marshal.copy 20160515
             If iSamples = 0 Or iSamples <> 786432 Then Continue While
             m_fPollingTime2 += m_oTimer.ElapsedMilliseconds - iPollStart
             m_iPollingIterations2 += 1
@@ -646,11 +600,8 @@ Public Class Main
         If DisplayOn = True Or (DisplayOffCounter = DisplayOffPeriod - 1 And ExperimentRunning = False) Then   ' uncomment this for experiment
             'If DisplayOn = True Then       ' test only
             Dim iRgbBuffer() As Integer = ConvertGray16ToRGB(buffer, iExtraSamples, samples - iExtraSamples, processedGrayPixels)
-
-            'Dim iGrayBuffer() As Integer = ProcessGray16(buffer, iExtraSamples, samples - iExtraSamples)
             Dim iSamplesToWrite = iRgbBuffer.Length
             Dim oData As Imaging.BitmapData = m_oBitmap.LockBits(New Rectangle(0, 0, m_iImageSize, m_iImageSize), Imaging.ImageLockMode.ReadWrite, Imaging.PixelFormat.Format32bppRgb)
-            'Dim oData As Imaging.BitmapData = m_oBitmap.LockBits(New Rectangle(0, 0, m_iImageSize, m_iImageSize), Imaging.ImageLockMode.ReadWrite, Imaging.PixelFormat.Format32bppArgb)
 
             iFrameSize = m_iImageSize * m_iImageSize
             iExtraSamples = Max(0, (iSamplesToWrite \ iFrameSize) - 1) * iFrameSize  ' don't bother processing multiple frames for one display update
@@ -696,7 +647,8 @@ Public Class Main
             End While
             m_oBitmap.UnlockBits(oData)
         End If
-        '================================== End of display on =====================================================================
+        '================================== End of display on ============================================
+		'==================================   Display off   ==============================================
 
         If DisplayOn = False Then ' test direct processing on buffer
             'flip the rows, correct for bidirectional scanning    flip ROI masks
@@ -722,7 +674,7 @@ Public Class Main
                 flipdone = True
             End If
             ProcessGray16(buffer, iExtraSamples, samples - iExtraSamples, AllMaskROIArray, processedGrayPixels)   ' uncomment this for experiment
-            ' -- for test only
+            ' -- for test only --
             'Dim iRgbBuffer() As Integer = ProcessGray16(buffer, iExtraSamples, samples - iExtraSamples, AllMaskROIArray, processedGrayPixels)
             'Dim iSamplesToWrite = iRgbBuffer.Length
             'Dim oData As Imaging.BitmapData = m_oBitmap.LockBits(New Rectangle(0, 0, m_iImageSize, m_iImageSize), Imaging.ImageLockMode.ReadWrite, Imaging.PixelFormat.Format32bppRgb)
@@ -737,7 +689,7 @@ Public Class Main
             '    End If
             'End While
             'm_oBitmap.UnlockBits(oData)
-            ' -- end test only
+            ' -- end test only --
 
 
         End If   ' end if displayon is false
@@ -750,7 +702,6 @@ Public Class Main
         testdisplaytimeLabel.Text = CStr(displaytime)
 
         'Here is where the realtime threshold checks and feedback/triggering happens:
-
 
         If AllROIsSelected Then
             'If IsSensoryStim AndAlso IsMaster Then
@@ -846,7 +797,7 @@ Public Class Main
 
 
                 End If
-                '------------------------------------------------------------------------
+                '---------------------End Wait for sensory trigger ---------------------------------------------------
 
                 If DisplayOn = False And AllTriggersEnabled = True Then
                     AllTriggerStatus = 0
@@ -855,7 +806,7 @@ Public Class Main
 
                         If IsTrigTar = True Then  ' trigger-target 
                             Dim CurrentStd As Double
-                            ' -------  Get current av and std -------------
+                            ' -------  get current mean and sd -------------
                             'Dim tempidx = SamplesReceived Mod SlidingWindowSize
                             ROIav(ROIIdx) -= SlidingAvg(ROIIdx, tempidx(ROIIdx))
                             SlidingAvg(ROIIdx, tempidx(ROIIdx)) = SumROIintensity(ROIIdx) / SlidingWindowSize
@@ -892,10 +843,7 @@ Public Class Main
                             If CheckBoxNoiseConstraint.Checked = True AndAlso (TrialStatus(NumFrames - 1) = True) AndAlso (CurrentStd < NoiseStd(ROIIdx)) Then
                                 Continue For
                             End If
-                            '-------- end get current av and std -----------
-
-
-
+                            '-------- end get current mean and sd -----------
 
                         Else ' if not Tri-target, get df/f
                             CurrentRatio = ((SumROIintensity(ROIIdx) - ROIBaseline(ROIIdx)) / ROIBaseline(ROIIdx)) * 100
@@ -977,13 +925,10 @@ Public Class Main
         Dim iElapsedMilliseconds As Long = m_oTimer.ElapsedMilliseconds
         TestPeriod = iElapsedMilliseconds - teststop   ' processing time
         ThisFramePeriod = iElapsedMilliseconds - iLastElapsedMilliseconds
-        '        m_fProcessingTime += iElapsedMilliseconds - iLastElapsedMilliseconds
         iLastElapsedMilliseconds = iElapsedMilliseconds
         m_iProcessingIterations += 1
         lblPollingTime.Text = Format(m_fPollingTime2 / m_iPollingIterations2, "0.000")
         lblPollingPeriod.Text = Format(m_fPollingTime / m_iPollingIterations, "0.000")
-
-        ' lblProcessingPeriod.Text = Format(m_fProcessingTime / m_iProcessingIterations, "0.000")
         lblFrameTime.Text = Format(ThisFramePeriod, "0.000")
         lblTestTime.Text = Format(TestPeriod, "0.000")
 
@@ -1194,7 +1139,7 @@ Public Class Main
                 processedGrayPixels(i) = CInt(iSum / iCount)
             End If
 
-            ''could subtract 8192 from averaged samples.. but doesnt give same values
+            ''could subtract 8192 from averaged samples. but doesnt give same values
             'ProcessedGrayPixels(i) = CInt(iSum / iCount) - 8192
             'If ProcessedGrayPixels(i) < 0 Then
             '    ProcessedGrayPixels(i) = 0
@@ -1209,7 +1154,8 @@ Public Class Main
 
 
 
-        ''update some GUI labels
+        '---- for test only ---
+		'update some GUI labels
         'Dim avg_pixel_val As Double = ProcessedGrayPixels.Average()
         'Dim max_pixel_val As Double = ProcessedGrayPixels.Max()
         'Dim min_pixel_val As Double = ProcessedGrayPixels.Min()
@@ -1231,6 +1177,7 @@ Public Class Main
         'sw.WriteLine(fstr)
         'sw.Flush()
         'sw.Close()
+		'--- end test only ---
 
         Return rgbPixels
     End Function
@@ -1238,13 +1185,6 @@ Public Class Main
     Private Sub numBitsToShift_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numBitsToShift.ValueChanged
         m_iBitsToShift = CInt(numBitsToShift.Value)
     End Sub
-
-    'Private Sub NumericUpDown2_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numImageSize.ValueChanged
-    '    m_iImageSize = CInt(numImageSize.Value)
-    '    m_oBitmap = New Bitmap(m_iImageSize, m_iImageSize, Imaging.PixelFormat.Format32bppRgb)   '=============was Format32bppArgb============
-    '    PictureBox1.Size = New Size(m_iImageSize, m_iImageSize)
-    '    PictureBox1.Image = m_oBitmap
-    'End Sub
 
     Private Sub numSamplesPerPixel_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numSamplesPerPixel.ValueChanged
         m_iSamplesPerPixel = CInt(numSamplesPerPixel.Value)
@@ -1358,9 +1298,9 @@ Public Class Main
 
  
         lblStimNum.Text = CStr(StimNum)
+		' record stim frame and pattern
         RecordArray(0, StimNum) = CStr(AllTriggerStatus)
         RecordArray(1, StimNum) = CStr(NumFrames)
-
         'RecordArray(3, StimNum) = CStr(echoData)
         'RecordArray(4, StimNum) = CStr(ROIBaseline(0))
 
