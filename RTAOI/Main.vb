@@ -1,13 +1,14 @@
 ﻿' Closed-loop interface    20161219
-' make sure only one image acquisition channel is on in prairie view, and image conversion to tiff is disabled
-' image size 512x512
-' setup SLM control and sensory stimulation control
-' start RTAOI.exe 
-' select a .bmp image and select centres of ROIs 
-' setup experiment type, parameters and TCP connections in the UI
-' check 'display-off' box and click start-experiment
-' experiment will start as Prairie View starts imaging
-' save the stimulation frame and pattern indices to a .txt file 
+' --- Instructions for Running: ---
+' 1. make sure only one image acquisition channel is on in prairie view, image size 512x512, and image conversion to tiff is disabled
+' 2. setup SLM control and sensory stimulation control
+' 3. start RTAOI.exe 
+' 4. select a .bmp image and select centres of ROIs 
+' 5. setup experiment type, parameters and TCP connections in the UI
+' 6. check 'display-off' box and click start-experiment
+' 7. experiment will start as Prairie View starts imaging
+' 8. save the stimulation frame and pattern indices to a .txt file 
+' --- End of Instructions ---
 
 Option Strict Off
 Imports System.Runtime.InteropServices
@@ -24,7 +25,7 @@ Public Class Main
     Private AllResetFrames As Integer = 2 ' ignore photostim-contaminated frames
     'ROIs
     Private NumTriggerROIs As Integer = 3  ' number of trigger rois in experiment 
-    Private SelectedROIsCount As Integer = 0  'used for start, count numebr of rois as they are seleted
+    Private SelectedROIsCount As Integer = 0  'used for start, count numebr of rois as they are selected
     Private MaskRadius As Integer = 10
     Private ROIMasks As New List(Of Image)
     Private ROIMaskIndices(NumTriggerROIs) As Queue(Of Integer)
@@ -152,6 +153,7 @@ Public Class Main
 
     Private m_iPollingIterations2 As Integer = 0
     Private m_fPollingTime2 As Long = 0
+	
     ' activity clamp
     Private IsCalciumClamp As Boolean = False
     Private NumClampOnFrames As Integer = 900
