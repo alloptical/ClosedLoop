@@ -1,45 +1,16 @@
 /*********************************************************************
-*
-* ANSI C Example program:
-*    Acq-IntClk.c
-*
-* Example Category:
-*    AI
-*
-* Description:
-*    This example demonstrates how to acquire a finite amount of data
-*    using the DAQ device's internal clock.
-*
 * Instructions for Running:
-*    1. Select the physical channel to correspond to where your
-*       signal is input on the DAQ device.
-*    2. Enter the minimum and maximum voltages.
-*    Note: For better accuracy try to match the input range to the
-*          expected voltage level of the measured signal.
-*    3. Select the number of samples to acquire.
-*    4. Set the rate of the acquisition.
-*    Note: The rate should be AT LEAST twice as fast as the maximum
-*          frequency component of the signal being acquired.
+*  1. Setup directory to where your phase masks are saved.
+*  2. Setup TCP server address 
+*  3. Select the physical channel to correspond to where your signal is input on the DAQ device (optional)
+*  4. Enter total number of phase masks
+*  5. Enter 'Y' when you are ready to start experiment
 *
-* Steps:
-*    1. Create a task.
-*    2. Create an analog input voltage channel.
-*    3. Set the rate for the sample clock. Additionally, define the
-*       sample mode to be finite and set the number of samples to be
-*       acquired per channel.
-*    4. Call the Start function to start the acquisition.
-*    5. Read all of the waveform data.
-*    6. Call the Clear Task function to clear the task.
-*    7. Display an error if any.
-*
-* I/O Connections Overview:
-*    Make sure your signal input terminal matches the Physical
-*    Channel I/O Control. For further connection information, refer
-*    to your hardware reference manual.
-*
-* TO DO
-* save image to an arrary
-* acquire analog output contineously, use callback when analog slop is detected
+* Notes
+*   make sure no other application is controlling the SLM.
+*   ensure that Blink_SDK.dll is in the same directory as the .exe file.
+
+
 
 *********************************************************************/
 #include <stdio.h>
@@ -118,9 +89,6 @@ int main(void)
 	int32      numBytes = numbytes;
 	unsigned char     **bmpArray = NULL;
 
-	//// transient frames vector  -- will need 930 transient frames?
-	//vector<vector <unsigned char> > TranFrameVec;
-	// Typedef for the container for our phase targets.
 	typedef std::vector<unsigned char>  uchar_vec;
 
 	/* CLOCK */
@@ -138,7 +106,7 @@ int main(void)
 	const bool         is_nematic_type = true;
 	const bool         RAM_write_enable = true;
 	const bool         use_GPU_if_available = true;
-	const char* const  regional_lut_file = "C:/Program Files/Meadowlark Optics/Overdrive Plus/SLM_3331_encrypt.txt"; //"C:/Zoe/BlinkSDKexample/SLM_3331_encrypt.txt";
+	const char* const  regional_lut_file = "C:/Program Files/Meadowlark Optics/Overdrive Plus/SLM_3331_encrypt.txt"; // slm lut dir; change the dir here
 
 	unsigned int n_boards_found = 0U;
 	bool         constructed_okay = true;
@@ -168,7 +136,7 @@ int main(void)
 	bmpArray = new unsigned char*[numMasks];
 	for (int i = 0; i < numMasks; i++)
 	{
-		sprintf(filename, "C:/Zoe/ROIfiles/PhaseMasks/Pattern%i.bmp", i + 1);
+		sprintf(filename, "C:/Zoe/ROIfiles/PhaseMasks/Pattern%i.bmp", i + 1);// change the dir here
 		// load bmp file 
 		ifstream   file_in;
 		file_in.open(filename, ios::in | ios::binary);
@@ -194,18 +162,6 @@ int main(void)
 
 
 	}
-	/*********************************************/
-	// Calculate transient vectors code
-	/*********************************************/
-	//unsigned int byte_count = 0U;
-	//for (int i = 0; i < numMasks; i++)
-	//{
-	//	vector<unsigned char > row;
-	//	bool okay = sdk.Write_overdrive_image(board_number, bmpArray[i]) &&
-	//		sdk.Calculate_transient_frames(ramp2.data(), &byte_count);
-	//	TranFrameVec.push_back(row);
-
-	//}
 
 	/*********************************************/
 	// DAQmx Configure Code
@@ -213,7 +169,7 @@ int main(void)
 
 	// writing task   --WriteTaskHandle
 	DAQmxErrChk(DAQmxCreateTask("", &WriteTaskHandle));
-	DAQmxErrChk(DAQmxCreateAOVoltageChan(WriteTaskHandle, "Dev2/ao6", "", 0, 10.0, DAQmx_Val_Volts, NULL));                        // ao to PV
+	DAQmxErrChk(DAQmxCreateAOVoltageChan(WriteTaskHandle, "Dev2/ao6", "", 0, 10.0, DAQmx_Val_Volts, NULL));       // ao pulses
 
 
 	while (start != 'Y'){
@@ -294,8 +250,7 @@ int main(void)
 			{
 				printf("Load pattern %d \n", fileInx);
 				t1 = high_resolution_clock::now();
-				okay = okay && sdk.Write_overdrive_image(board_number, bmpArray[fileInx - 1]);  // 12 - 13 ms; clear image on CCD
-				//okay = okay && sdk.Write_image(board_number, bmpArray[fileInx - 1], width);   // 10 ms; observable high order spots on CCD, low diffraction efficiency? 
+				okay = okay && sdk.Write_overdrive_image(board_number, bmpArray[fileInx - 1]);  // 12 - 13 ms; clear image on CMOS
 				t2 = high_resolution_clock::now();
 				auto duration = duration_cast<microseconds>(t2 - t1).count();
 				cout << "Write phase mask time (us)" << duration << "\n";
@@ -306,7 +261,6 @@ int main(void)
 					cout << "SLM error\n";
 					puts(sdk.Get_last_error_message());
 				}
-
 
 				LastFileInx = fileInx;
 
@@ -322,13 +276,10 @@ int main(void)
 				//printf("Bytes sent: %d\n", iSendResult);
 			/*Uncomment end */
 			
-			// write trigger to PV
-			//DAQmxErrChk(DAQmxWriteAnalogF64(WriteTaskHandle, 10, 1, 0.01, DAQmx_Val_GroupByChannel, WriteData, &written, NULL));
+			// write trigger to PV  -- this is currently done in closed-loop interface (RTAOI)
+			//DAQmxErrChk(DAQmxWriteAnalogF64(WriteTaskHandle, 10, 1, 0.01, DAQmx_Val_GroupByChannel, WriteData, &written, NULL)); // change channel here to send TTL triggers
 			totalWrite += 1;
 			cout << "Total Trigger to PV = " << totalWrite << endl;
-
-
-			
 
 		}
 			tSTOP = high_resolution_clock::now();
