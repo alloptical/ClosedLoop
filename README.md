@@ -13,7 +13,7 @@ User selects one or multiple ‘trigger cells’ and provide phase-masks for the
 User specifies the type of single-whisker deflection and the level of activity thresholds. Whisker stimuli can be triggered manually or in a sequence defined by the user. Photostimulation will be sent to the cell-of-interest if its sensory-evoked activity did not pass the activity threshold within a user-defined timeout window after the delivery of sensory stimuli. 
 
 Detailed instructions can be found in the source codes.
-![Closed-loop interface](https://github.com/alloptical/ClosedLoop/blob/master/images/RTAOI_screenshot.png)
+![Closed-loop interface](https://github.com/alloptical/ClosedLoop/blob/master/images/RTAOI20180214.png)
 
 #Dependences
 Spiral size, revolution and durations of the photostimulation protocol should be defined in PrarieView (Bruker Corporation). The access to the raw image data stream depends on PrairieLink (Bruker Corporation). The phase masks are uploaded to the SLM using the Blink_SDK dll(Meadowlark Optics). Analogue voltage outputs were generated using NI-DAQmx (National Instruments). Software platforms used in the package include: VB.net, Visual Studio 2013 (64 bits) and Matlab (2016a). This code can be done with Scanimage
