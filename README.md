@@ -9,8 +9,8 @@ User specifies the target dF/F thresholds and clamping durations. Photostimulati
 2.	Trigger-targets:
 User selects one or multiple ‘trigger cells’ and provide phase-masks for the ‘target cells’ assigned to each trigger cell. The activity threshold of each trigger is updated at every frame and compared with the latest calcium signal recorded from the cell. If the signal is above threshold, the software will switch the phase mask on the SLM to target photostimulation beamlets at the corresponding targets cells. 
 
-3.	Boost sensory response
-User specifies the type of single-whisker deflection and the level of activity thresholds. Whisker stimuli can be triggered manually or in a sequence defined by the user. Photostimulation will be sent to the cell-of-interest if its sensory-evoked activity did not pass the activity threshold within a user-defined timeout window after the delivery of sensory stimuli. 
+3.	Boost sensory response:
+User specifies the type of stimulus and the level of activity thresholds. Stimuli can be triggered manually or in a sequence defined by the user. Photostimulation will be sent to the cell-of-interest if its sensory-evoked activity did not pass the activity threshold within a user-defined timeout window after the delivery of sensory stimuli. 
 
 Detailed instructions can be found in the source codes.
 ![Closed-loop interface](https://github.com/alloptical/ClosedLoop/blob/master/images/RTAOI201802.PNG)
