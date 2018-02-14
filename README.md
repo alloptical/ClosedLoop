@@ -15,7 +15,7 @@ User specifies the type of single-whisker deflection and the level of activity t
 Detailed instructions can be found in the source codes.
 ![Closed-loop interface](https://github.com/alloptical/ClosedLoop/blob/master/images/RTAOI201802.PNG)
 
-# Dependences
+# Dependencies
 Spiral size, revolution and durations of the photostimulation protocol should be defined in PrarieView (Bruker Corporation). The access to the raw image data stream depends on PrairieLink (Bruker Corporation). The phase masks are uploaded to the SLM using the Blink_SDK dll(Meadowlark Optics). Analogue voltage outputs were generated using NI-DAQmx (National Instruments). Software platforms used in the package include: VB.net, Visual Studio 2013 (64 bits) and Matlab (2016a). This code can be done with Scanimage
 http://scanimage.vidriotechnologies.com/pages/viewpage.action?pageId=18252396
 
