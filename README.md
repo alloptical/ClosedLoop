@@ -1,5 +1,5 @@
 # Introduction
-This is a software package for the application of online closed-loop all-optical interrogation of neural circuits. The code was written by Zihui Zhang, Lloyd Russel, Oliver Gauld and Adam Packer in the lab of Michael Hausser.
+This is a software package for the application of online closed-loop all-optical interrogation of neural circuits. The code was written by Zihui Zhang, Lloyd Russell, Oliver Gauld and Adam Packer in the lab of Michael Hausser.
 The closed-loop interface (RTAOI) analyses the raw data acquired by a two-photon microscope (Bruker Corporation) on-the-fly and communicates with the microscope control software, Prairie View (Bruker Corporation), a custom spatial light modulator (SLM) control software (CL-Blink, based on the Blink SDK provided by Meadowlark Optics) and a custom sensory stimulation control software (StimPlayground_TCP) via TCP/IP sockets. The interface enable users to select regions of interests (ROIs), specify experiment protocols, and save recordings. 
 The UI can work in two modes: display-on and display-off. In the display-on mode, the current calcium image and the calcium traces extracted from the ROIs are displayed on the UI. The display panels should be turned off during experiment for high-speed performance. Three types of experiments can be performed with this package:
 
