@@ -1,0 +1,127 @@
+C:\Users\User\Desktop\rtaoi\obj\Release\ResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi\bin\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi\bin\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi\obj\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20160329\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20160329\bin\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi 20160329\bin\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20160329\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20160329\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20160329\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\ResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi 20160329\obj\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20160403\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20160403\bin\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi 20160403\bin\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20160403\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20160403\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20160403\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\ResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi 20160403\obj\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20160826\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20160826\bin\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi 20160826\bin\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20160826\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20160826\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20160826\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\ResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.exe.manifest
+C:\Users\User\Desktop\rtaoi 20160826\obj\Release\RTAOI.application
+C:\Users\User\Desktop\rtaoi 20171002\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.vbprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi 20171002\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi 20171002\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20171002\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20171002\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20171002\bin\Release\NationalInstruments.UI.Styles3D.dll
+C:\Users\User\Desktop\rtaoi 20171008\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20171008\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20171008\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20171008\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.vbprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi 20171008\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi 20171008\bin\Release\NationalInstruments.UI.Styles3D.dll
+C:\Users\User\Desktop\rtaoi 20171012\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20171012\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi 20171012\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi 20171012\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi 20171012\bin\Release\NationalInstruments.UI.Styles3D.dll
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.vbprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi 20171012\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\RTAOI.exe.config
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\RTAOI.exe
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\RTAOI.pdb
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\RTAOI.xml
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.Main.resources
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.Resources.resources
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.vbproj.GenerateResource.Cache
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.exe.licenses
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\CudaFFT.dll
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\ManagedCuda.dll
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\CudaFFT.pdb
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\CudaFFT.xml
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\ManagedCuda.pdb
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\ManagedCuda.xml
+C:\Users\User\Desktop\rtaoi -Dev\obj\Release\RTAOI.vbprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\kernel_x64.ptx
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\CudaBlas.dll
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\CudaBlas.pdb
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\CudaBlas.xml
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\BitMiracle.LibTiff.NET40.dll
+C:\Users\User\Desktop\rtaoi -Dev\bin\Release\BitMiracle.LibTiff.NET40.xml
