@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework">
+  <Rule Name="ReferencedPackageseba9adc7-0094-49bf-b23d-d661f308a3e3" PageTemplate="tool" DisplayName="Referenced Packages" SwitchPrefix="/" Order="1">
+    <Rule.Categories>
+      <Category Name="freeimage" DisplayName="freeimage" />
+    </Rule.Categories>
+    <Rule.DataSource>
+      <DataSource Persistence="ProjectFile" ItemType="" />
+    </Rule.DataSource>
+    <EnumProperty Name="Linkage-freeimage" DisplayName="Linkage" Description="Which version of the .lib file to link to this library" Category="freeimage">
+      <EnumValue Name="" DisplayName="Dynamic Library (DLL)" />
+    </EnumProperty>
+  </Rule>
+</ProjectSchemaDefinitions>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="freeimage_init">
+  <PropertyGroup Label="Default initializers for properties">
+    <Linkage-freeimage Condition="'$(Linkage-freeimage)' == ''">dynamic</Linkage-freeimage>
+    <CallingConvention-freeimage Condition="'$(CallingConvention-freeimage)' == ''">cdecl</CallingConvention-freeimage>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..//build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)../..//build/native/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="Win32 and dynamic" Condition="'$(Platform.ToLower())' == 'win32' And '$(Linkage-freeimage.ToLower())' == 'dynamic'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/Win32\dynamic\FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="x64 and dynamic" Condition="'$(Platform.ToLower())' == 'x64' And '$(Linkage-freeimage.ToLower())' == 'dynamic'">
+    <Link>
+      <AdditionalDependencies>$(MSBuildThisFileDirectory)../..//build/native/lib/x64\dynamic\FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\default-propertiesui.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\freeimage-propertiesui-b13e1170-2861-42dc-8c4f-862bde2f1f6f.xml" />
+  </ItemGroup>
+  <UsingTask TaskName="freeimage_Contains" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll" TaskFactory="CodeTaskFactory">
+    <ParameterGroup>
+      <Text Output="false" ParameterType="System.String" />
+      <Library Output="false" Required="true" ParameterType="System.String" />
+      <Value Output="false" Required="true" ParameterType="System.String" />
+      <Result Output="true" ParameterType="System.String" />
+    </ParameterGroup>
+    <Task>
+      <Code>Result = ((Text ?? "").Split(';').Contains(Library) ) ? Value : String.Empty;</Code>
+    </Task>
+  </UsingTask>
+  <Target Name="freeimage_init">
+    <freeimage_Contains Text="Linkage-dynamic" Library="freeimage" Value="dynamic" Condition="'$(Linkage-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="Linkage-static" Library="freeimage" Value="static" Condition="'$(Linkage-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="Linkage-ltcg" Library="freeimage" Value="ltcg" Condition="'$(Linkage-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="Linkage-sxs" Library="freeimage" Value="sxs" Condition="'$(Linkage-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="Linkage-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="CallingConvention-cdecl" Library="freeimage" Value="cdecl" Condition="'$(CallingConvention-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="CallingConvention-stdcall" Library="freeimage" Value="stdcall" Condition="'$(CallingConvention-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="CallingConvention-fastcall" Library="freeimage" Value="fastcall" Condition="'$(CallingConvention-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="CallingConvention-thiscall" Library="freeimage" Value="thiscall" Condition="'$(CallingConvention-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-freeimage" />
+    </freeimage_Contains>
+    <freeimage_Contains Text="CallingConvention-clrcall" Library="freeimage" Value="clrcall" Condition="'$(CallingConvention-freeimage)'==''">
+      <Output TaskParameter="Result" PropertyName="CallingConvention-freeimage" />
+    </freeimage_Contains>
+  </Target>
+</Project>
