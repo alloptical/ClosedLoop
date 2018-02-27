@@ -57,10 +57,8 @@ The installation procedure takes less than 1.5 hours on a desktop computer.
 *	Start data streaming in Prairie View
 
 __Expected output:__
-
 Photostimulation will be delivered to the ROIs that have intensity values below the set thresholds.
       
 __Expected run time for demo:__
-
-A maximum 2000 photostimulation can be delivered; run time depends on online recorded intensity within the ROIs; the user can terminate the process at anytime by stopping data streaming and restart by clicking 'New recording' in RTAOI.
+A maximum 2000 photostimulations can be delivered; run time depends on online recorded intensity within the ROIs; the user can terminate the process at anytime by stopping data streaming and restart by clicking 'New recording' in RTAOI.
 
