@@ -1,4 +1,8 @@
 ﻿'TO DO
+' instructions:
+' 1. Change Daq card device ID (replace 'dev9' with your device ID)
+' 2. Change TCP/IP address (should match with the address in CL_BLINK)
+' 3. Start Praririe View before running RTAOI (tested on 512 x 512 pixels per frame; 3 samples per pixel)
 
 
 Option Strict Off
@@ -118,8 +122,8 @@ Public Class Main
 
     'daq output
     'Private daqtask As New Task
-    Private daqtaskS1 As New Task  ' Dev6 ao0 toSensory (pink label)
-    Private daqtaskS2 As New Task   ' Dev6 ao1 toPV (pink label)
+    Private daqtaskS1 As New Task  ' Dev9 ao0 toSensory (pink label)
+    Private daqtaskS2 As New Task   ' Dev9 ao1 toPV (pink label)
     Private writerS1 As New AnalogSingleChannelWriter(daqtaskS1.Stream)
     Private writerS2 As New AnalogSingleChannelWriter(daqtaskS2.Stream)
     Private OutputArrayLength As Integer = 15 * NumTriggerROIs - 1
@@ -277,7 +281,7 @@ Public Class Main
     Dim BLOCK_SIZE As Integer = TILE_SIZE
     Dim GRID_SIZE As Integer = 16
     Dim ctx As CudaContext
-    Dim plan2D As New CudaFFTPlan2D(512, 512, cufftType.C2C) 'fft plan
+    Dim plan2D As New CudaFFTPlan2D(512, 512, cufftType.C2C) 'fft plan   UNCOMMENT THIS IF GPU IS INSTALLED!!!! ALSO DELETE 'DIM' WHEN PLAN2D FIRST OCCURS.. 20180227
     Dim devSamples As New CudaDeviceVariable(Of Int16)(512 * 512 * 3)
     Dim devGrayPixels As New CudaDeviceVariable(Of Int32)(512 * 512)
     Dim devCurrentComplex As New CudaDeviceVariable(Of cuFloatComplex)(512 * 512)
@@ -497,11 +501,11 @@ Public Class Main
 
 
         ' DAQ configuration
-        daqtaskS1.AOChannels.CreateVoltageChannel("Dev6/ao0", "", -10.0, 10.0, AOVoltageUnits.Volts)
-        daqtaskS2.AOChannels.CreateVoltageChannel("Dev6/ao1", "", -10.0, 10.0, AOVoltageUnits.Volts)
+        daqtaskS1.AOChannels.CreateVoltageChannel("Dev9/ao0", "", -10.0, 10.0, AOVoltageUnits.Volts)
+        daqtaskS2.AOChannels.CreateVoltageChannel("Dev9/ao1", "", -10.0, 10.0, AOVoltageUnits.Volts)
         daqtaskS1.Timing.SampleClockRate = 10000
         daqtaskS2.Timing.SampleClockRate = 10000
-        daqtask2.AIChannels.CreateVoltageChannel("Dev6/ai1", "readChannel", AITerminalConfiguration.Differential, 0.0, 5.0, AIVoltageUnits.Volts)
+        daqtask2.AIChannels.CreateVoltageChannel("Dev9/ai1", "readChannel", AITerminalConfiguration.Differential, 0.0, 5.0, AIVoltageUnits.Volts)
 
         'connect to prairie view  
         m_pl.Connect()
