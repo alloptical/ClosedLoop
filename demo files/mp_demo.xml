@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PVSavedMarkPointSeriesElements Iterations="2000" IterationDelay="0.00">
+  <PVMarkPointElement Repetitions="1" UncagingLaser="Fidelity" UncagingLaserPower="0" TriggerFrequency="None" TriggerSelection="None" TriggerCount="1" AsyncSyncFrequency="None" VoltageOutputCategoryName="adam" VoltageOutputExperimentName="1ms pulse trigout" VoltageRecCategoryName="None" parameterSet="CurrentSettings">
+    <PVGalvoPointElement InitialDelay="0.12" InterPointDelay="0.12" Duration="10" SpiralRevolutions="3" AllPointsAtOnce="False" />
+  </PVMarkPointElement>
+  <PVMarkPointElement Repetitions="5" UncagingLaser="Fidelity" UncagingLaserPower="0.19" TriggerFrequency="FirstRepetition" TriggerSelection="PFI1" TriggerCount="1" AsyncSyncFrequency="None" VoltageOutputCategoryName="adam" VoltageOutputExperimentName="1ms pulse trigout" VoltageRecCategoryName="None" parameterSet="CurrentSettings">
+    <PVGalvoPointElement InitialDelay="0.12" InterPointDelay="0.12" Duration="10" SpiralRevolutions="3" AllPointsAtOnce="False" />
+  </PVMarkPointElement>
+</PVSavedMarkPointSeriesElements>
