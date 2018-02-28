@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (DaqAnalogVoltageAcq.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  CL_BLINK.cpp
+c:\data\zoe\vsprojects\cl blink (demo)\cl_blink\cl_blink\cl_blink.cpp(136): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
+c:\data\zoe\vsprojects\cl blink (demo)\cl_blink\cl_blink\cl_blink.cpp(48): warning C4101: 'written' : unreferenced local variable
+c:\data\zoe\vsprojects\cl blink (demo)\cl_blink\cl_blink\cl_blink.cpp(70): warning C4101: 'message' : unreferenced local variable
+LINK : fatal error LNK1181: cannot open input file 'C:\Zoe\Blinklib\Blink_SDK.lib'
